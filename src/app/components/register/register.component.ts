@@ -10,6 +10,7 @@ import { RegisterService } from 'src/app/services/register.service';
 import { Subscription } from 'rxjs';
 import resources from "../../../assets/resources.json";
 import { MasksService } from 'src/app/services/masks.service';
+import { emailValidator } from 'src/app/shared/custom-validators.directive';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +29,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   levels: [];
   rsc: any;
 
-  mask;
+  maskMobile;
+  maskLicenceNb;
 
   registerForm: FormGroup;
   showPassword: boolean = false;
@@ -40,6 +42,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private validateService: ValidateService,
     private flashMessages: FlashMessagesService,
     private registerService: RegisterService,
+    private maskService: MasksService,
     private router: Router,
     private GLOBAL: GlobalConstants,
     private fb: FormBuilder
@@ -62,12 +65,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.imgSrc = this.GLOBAL.DEFAULT_AVATAR;
     this.rsc = resources;
     this.createForm();
-    this.mask = MasksService;
+    this.maskMobile = this.maskService.GetMobile;
+    this.maskLicenceNb = this.maskService.GetLicenceNb;
   }
 
   ngOnDestroy() {
     this.getLevels$.unsubscribe();
   }
+
+  
+  public get validator() : ValidateService {
+      return this.validateService;
+  }
+  
 
   onRegisterSubmit() {
     console.log(this.registerForm.value);
@@ -80,7 +90,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     // Validate email
-    if(!this.validateService.ValidateEmail(this.registerForm.value.email)) {
+    if(!this.validateService.isMailValid(this.registerForm.value.email)) {
       this.flashMessages.show('Veuillez renseigner un email valide !', {cssClass: 'alert-danger', timeout: 3000});
       return false;
     }
@@ -108,7 +118,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       password: ['', Validators.required],
       confirmpassword: ['', Validators.required],
       rank: ['', Validators.required],
-      licence_nb: ['', Validators.required],
+      licence_nb: ['', [Validators.required, Validators.pattern(this.validateService.LICENCENBREGEX)]],
       birthdate: ['', Validators.required],
       mobile: ['', Validators.pattern(this.validateService.MOBILEREGEX)],
       sex: ['', Validators.required]

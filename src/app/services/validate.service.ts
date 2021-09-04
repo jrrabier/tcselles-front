@@ -8,6 +8,8 @@ export class ValidateService {
 
   public MAILREGEX: RegExp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/;
   public MOBILEREGEX: RegExp = /^0(6|7)\d{8}$/;
+  public PSWREGEX: RegExp = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  public LICENCENBREGEX: RegExp = /^\d{7}\w{1}$/;
 
   constructor() { }
 
@@ -27,7 +29,11 @@ export class ValidateService {
     }
   }
 
-   ValidateEmail(mail: string) {
+   /**
+    * Contrôle la validité de l'adresse mail
+    * @param mail adresse mail
+    */
+   isMailValid(mail: string): boolean {
     return this.MAILREGEX.test(mail);
    }
 
@@ -35,7 +41,23 @@ export class ValidateService {
     * Contrôle la validité du numéro de mobile
     * @param mobile numéro de mobile
     */
-   ValidateMobile(mobile: string) {
+   isMobileValid(mobile: string): boolean {
     return this.MOBILEREGEX.test(mobile);
+   }
+
+   /**
+    * Contrôle la validité du mot de passe
+    * @param psw mot de passe
+    */
+   isPswValid(psw: string): boolean {
+    return this.PSWREGEX.test(psw);
+   }
+
+   /**
+    * Contrôle la validité du numéro de licence
+    * @param licence_nb numéro de licence
+    */
+   isLicenceNbValid(licence_nb: string): boolean {
+    return this.LICENCENBREGEX.test(licence_nb);
    }
 }

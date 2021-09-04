@@ -1,17 +1,20 @@
-<div class="container mt-5">
-    <form class="pt-5" [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
+<div class="container hasNavbar">
+    <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()">
         <div class="mb-3 col-md-6">
-            <div class="row mb-3">
-                <div class="col-6 col-md-12 text-center col">
-                    <img class="img-fluid rounded w-50 p-2" src={{imgSrc}} alt="avatar">
+            <div class="d-flex flex-row mb-3">
+                <div class="col-6 text-center col">
+                    <img class="img-fluid rounded" src={{imgSrc}} alt="avatar">
                 </div>
-                <div class="d-flex flex-column flex-md-row justify-content-md-evenly col-6 col-md-12 my-auto">
-                    <div *ngFor="let sex of sexesList">
-                        <input class="btn-check" type="radio" formControlName="sex" [value]="sex.value" [id]="sex.id" required autocomplete="off">
-                        <label class="btn btn-outline-success" [for]="sex.id">
+                <div class="d-flex flex-column col-6 my-auto">
+                    <div *ngFor="let sex of sexesList" class="form-check">
+                        <input class="form-check-input" type="radio" formControlName="sex" [value]="sex.value" [id]="sex.id" required autocomplete="off">
+                        <label class="form-check-label" [for]="sex.id">
                             {{ sex.label }}&nbsp;
                         <fa-icon [icon]="sex.icon"></fa-icon>
                         </label>
+                        <div *ngIf="registerForm.get('sex').getError('required')" class="invalid-feedback">
+                            {{ rsc.invalidFeedback.required }}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -27,7 +30,7 @@
                             'is-valid': registerForm.get('lastname')?.valid
                     }" id="lastName" required>
                         <label class="required" for="lastName">Nom</label>
-                        <div class="invalid-feedback">
+                        <div *ngIf="registerForm.get('lastname').getError('required')" class="invalid-feedback">
                             {{ rsc.invalidFeedback.required }}
                         </div>
                     </div>
@@ -39,7 +42,7 @@
                             'is-valid': registerForm.get('firstname')?.valid
                     }" id="firstName" aria-describedby="emailHelp" required>
                         <label class="required" for="firstName">Prénom</label>
-                        <div class="invalid-feedback">
+                        <div *ngIf="registerForm.get('firstname').getError('required')" class="invalid-feedback">
                             {{ rsc.invalidFeedback.required }}
                         </div>
                     </div>
@@ -51,41 +54,41 @@
                             'is-valid': registerForm.get('birthdate')?.valid
                     }" id="birthDate" required>
                         <label class="required" for="birthDate">Date de naissance</label>
-                        <div class="invalid-feedback">
+                        <div *ngIf="registerForm.get('birthdate').getError('required')" class="invalid-feedback">
                             {{ rsc.invalidFeedback.required }}
                         </div>
                     </div>
                 </div>
-                    <div class="mb-3 col">
-                        <div class="form-floating mb-3">
-                            <select 
-                            [class]="{
-                                'form-select':true,
-                                'is-invalid': registerForm.get('rank')?.invalid && registerForm.get('rank').dirty,
-                                'is-valid': registerForm.get('rank')?.valid
-                        }"  formControlName="rank" aria-label="liste des classements" id="rank" required>
-                                <option *ngFor="let level of levels" [value]="level.id">
-                                    {{ level.label }}
-                                </option>
-                            </select>
-                            <label class="required" for="rank">Classement</label>
-                            <div class="invalid-feedback">
-                                {{ rsc.invalidFeedback.required }}
-                            </div>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input placeholder="2340404S" type="text" formControlName="licence_nb" 
-                            [class]="{
-                                'form-control':true,
-                                'is-invalid': registerForm.get('licence_nb')?.invalid && registerForm.get('licence_nb').dirty,
-                                'is-valid': registerForm.get('licence_nb')?.valid
-                        }"  id="licence_nb" required>
-                            <label class="required" for="licence_nb">N° de licence</label>
-                            <div class="invalid-feedback">
-                                {{ rsc.invalidFeedback.required }}
-                            </div>
+                <div class="mb-3 col">
+                    <div class="form-floating mb-3">
+                        <select 
+                        [class]="{
+                            'form-select':true,
+                            'is-invalid': registerForm.get('rank')?.invalid && registerForm.get('rank').dirty,
+                            'is-valid': registerForm.get('rank')?.valid
+                    }"  formControlName="rank" aria-label="liste des classements" id="rank" required>
+                            <option *ngFor="let level of levels" [value]="level.id">
+                                {{ level.label }}
+                            </option>
+                        </select>
+                        <label class="required" for="rank">Classement</label>
+                        <div *ngIf="registerForm.get('rank').getError('required')" class="invalid-feedback">
+                            {{ rsc.invalidFeedback.required }}
                         </div>
                     </div>
+                    <div class="form-floating mb-3">
+                        <input placeholder="2340404S" type="text" formControlName="licence_nb" 
+                        [class]="{
+                            'form-control':true,
+                            'is-invalid': registerForm.get('licence_nb')?.invalid && registerForm.get('licence_nb').dirty,
+                            'is-valid': registerForm.get('licence_nb')?.valid
+                    }" [textMask]="{mask: maskLicenceNb, guide: false}" id="licence_nb" required>
+                        <label class="required" for="licence_nb">N° de licence</label>
+                        <div *ngIf="registerForm.get('licence_nb').getError('required')" class="invalid-feedback">
+                            {{ rsc.invalidFeedback.required }}
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="d-flex flex-column flex-md-row">
                 <div class="mb-3 col">
@@ -100,6 +103,9 @@
                         <div *ngIf="registerForm.get('email').getError('required')" class="invalid-feedback">
                             {{ rsc.invalidFeedback.required }}
                         </div>
+                        <div *ngIf="registerForm.get('email').getError('pattern')" class="invalid-feedback">
+                            {{ rsc.invalidFeedback.email }}
+                        </div>
                     </div>
                     <div class="form-floating mb-3">
                         <input placeholder="0254976179" type="phone" formControlName="mobile" 
@@ -107,8 +113,11 @@
                             'form-control':true,
                             'is-invalid': registerForm.get('mobile')?.invalid && registerForm.get('mobile').dirty,
                             'is-valid': registerForm.get('mobile')?.valid && registerForm.get('mobile').value != ''
-                    }" [textMask]="{mask: mask.mobile}" id="mobile">
+                    }" [textMask]="{mask: maskMobile, guide: false}" id="mobile">
                         <label for="mobile">Mobile</label>
+                        <div *ngIf="registerForm.get('mobile').getError('pattern')" class="invalid-feedback">
+                            {{ rsc.invalidFeedback.mobile }}
+                        </div>
                     </div>
                 </div>
             <div class="mb-3 col">
@@ -143,8 +152,10 @@
             </div>
         </div>
         <div class="d-flex justify-content-between align-items-center">
-            <button type="submit" class="btn btn-primary">M'inscrire</button>
             <app-compulsory></app-compulsory>
+            <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">
+                M'inscrire
+            </button>
         </div>
         <input type="file" formControlName="avatar" class="form-control-file" id="avatar">
     </form>
