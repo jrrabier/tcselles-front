@@ -23,6 +23,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { TextMaskModule } from 'angular2-text-mask';
 import { InputComponent } from './shared/components/input/input.component';
+import { LoadingComponent } from './shared/components/loading/loading.component';
 
 export function tokenGetter() {
   return sessionStorage.getItem('id_token');
@@ -38,7 +39,8 @@ export function tokenGetter() {
     ProfileComponent,
     CompulsoryComponent,
     ForgotPasswordComponent,
-    InputComponent
+    InputComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,

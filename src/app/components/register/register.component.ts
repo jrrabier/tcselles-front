@@ -54,7 +54,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           console.log(res);
           
         if (res.success) {
-          this.levels = res.levels;
+          this.levels = res.result;
         } else {
           this.flashMessages.show(res.msg, {cssClass: 'alert-danger', timeout: 2000});
         }

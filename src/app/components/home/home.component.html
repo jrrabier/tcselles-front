@@ -1,3 +1,19 @@
 <div class="container hasNavbar">
-    TC Selles
+    <div *ngIf="isRequestingCategories then loading else homePage">
+    </div>
+    <ng-template #loading>
+        <app-loading></app-loading>
+    </ng-template>
+    <ng-template #homePage>
+        <form [formGroup]="categoriesForm" (ngSubmit)="onSubmit()">
+            <div class="d-flex">
+                <div class="mr-2" *ngFor="let categories of categoriesList" role="group" aria-label="Boutons pour sélectionner les catégories d'articles">
+                    <input type="radio" class="btn-check" formControlName="articleCategory" [id]="categories.label" autocomplete="off" checked="" [value]="categories.id">
+                    <label class="btn btn-outline-secondary" [for]="categories.label">
+                        {{ categories.label }}
+                    </label>
+                </div>
+            </div>
+        </form>
+    </ng-template>
 </div>

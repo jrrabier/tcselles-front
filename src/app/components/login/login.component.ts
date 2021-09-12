@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (res.success) {
             this.user = res.user;
             this.authService.storeUserData(res.token, res.user);
-            this.flashMessages.show('Vous êtes connecté. Bienvenue !', {cssClass: 'alert-success', timeout: 5000});
+            this.flashMessages.show('Vous êtes connecté. Bienvenue !', {cssClass: ' alert alert-dismissible alert-success', timeout: 5000});
             this.router.navigate(['/home']);
         } else {
             this.flashMessages.show(res.msg, {cssClass: 'alert-danger', timeout: 5000});
