@@ -6,9 +6,9 @@
                     <img class="img-fluid rounded" src={{imgSrc}} alt="avatar">
                 </div>
                 <div class="d-flex flex-column col-6 my-auto">
-                    <div *ngFor="let sex of sexesList" class="btn-group" role="group" aria-label="Bouton radios pour choisir le sexe">
+                    <div *ngFor="let sex of sexesList" role="group" aria-label="Bouton radios pour choisir le sexe">
                         <input type="radio" class="btn-check" formControlName="sex" [value]="sex.value" [id]="sex.id" autocomplete="off" checked="" required>
-                        <label class="btn btn-outline-primary" [for]="sex.id">
+                        <label class="btn btn-outline-secondary" [for]="sex.id">
                             {{ sex.label }}&nbsp;
                             <fa-icon [icon]="sex.icon"></fa-icon>
                         </label>
@@ -29,7 +29,7 @@
                             'is-invalid': registerForm.get('lastname')?.invalid && registerForm.get('lastname').dirty,
                             'is-valid': registerForm.get('lastname')?.valid
                     }" id="lastName" required>
-                        <label class="required" for="lastName">Nom</label>
+                        <label for="lastName" required>Nom</label>
                         <div *ngIf="registerForm.get('lastname').getError('required')" class="invalid-feedback">
                             {{ rsc.invalidFeedback.required }}
                         </div>
@@ -41,7 +41,7 @@
                             'is-invalid': registerForm.get('firstname')?.invalid && registerForm.get('firstname').dirty,
                             'is-valid': registerForm.get('firstname')?.valid
                     }" id="firstName" aria-describedby="emailHelp" required>
-                        <label class="required" for="firstName">Prénom</label>
+                        <label for="firstName" required>Prénom</label>
                         <div *ngIf="registerForm.get('firstname').getError('required')" class="invalid-feedback">
                             {{ rsc.invalidFeedback.required }}
                         </div>
@@ -53,7 +53,7 @@
                             'is-invalid': registerForm.get('birthdate')?.invalid && registerForm.get('birthdate').dirty,
                             'is-valid': registerForm.get('birthdate')?.valid
                     }" id="birthDate" required>
-                        <label class="required" for="birthDate">Date de naissance</label>
+                        <label for="birthDate" required>Date de naissance</label>
                         <div *ngIf="registerForm.get('birthdate').getError('required')" class="invalid-feedback">
                             {{ rsc.invalidFeedback.required }}
                         </div>
@@ -71,7 +71,7 @@
                                 {{ level.label }}
                             </option>
                         </select>
-                        <label class="required" for="rank">Classement</label>
+                        <label for="rank" required>Classement</label>
                         <div *ngIf="registerForm.get('rank').getError('required')" class="invalid-feedback">
                             {{ rsc.invalidFeedback.required }}
                         </div>
@@ -83,7 +83,7 @@
                             'is-invalid': registerForm.get('licence_nb')?.invalid && registerForm.get('licence_nb').dirty,
                             'is-valid': registerForm.get('licence_nb')?.valid
                     }" [textMask]="{mask: maskLicenceNb, guide: false}" id="licence_nb" required>
-                        <label class="required" for="licence_nb">N° de licence</label>
+                        <label for="licence_nb" required>N° de licence</label>
                         <div *ngIf="registerForm.get('licence_nb').getError('required')" class="invalid-feedback">
                             {{ rsc.invalidFeedback.required }}
                         </div>
@@ -99,7 +99,7 @@
                             'is-invalid': registerForm.get('email')?.invalid && registerForm.get('email').dirty,
                             'is-valid': registerForm.get('email')?.valid
                     }"  id="email" required>
-                        <label class="required" for="email">Email</label>
+                        <label for="email" required>Email</label>
                         <div *ngIf="registerForm.get('email').getError('required')" class="invalid-feedback">
                             {{ rsc.invalidFeedback.required }}
                         </div>
@@ -128,7 +128,7 @@
                             'is-invalid': registerForm.get('password')?.invalid && registerForm.get('password').dirty,
                             'is-valid': registerForm.get('password')?.valid
                     }"  id="password" required>
-                    <label class="required" for="password">Mot de passe</label>
+                    <label for="password" required>Mot de passe</label>
                     <span class="input-group-text" (click)="showPassword = !showPassword">
                         <fa-icon *ngIf="!showPassword" icon="eye-slash"></fa-icon>
                         <fa-icon *ngIf="showPassword" icon="eye"></fa-icon>
@@ -142,7 +142,7 @@
                             'is-valid': registerForm.get('confirmPassword')?.valid
                     }"  id="confirmPassword"
                         required>
-                    <label class="required" for="confirmPassword">Confirmez votre mot de passe</label>
+                    <label for="confirmPassword" required>Confirmez votre mot de passe</label>
                     <span class="input-group-text" (click)="showconfirmPassword = !showconfirmPassword">
                         <fa-icon *ngIf="!showconfirmPassword" icon="eye-slash"></fa-icon>
                         <fa-icon *ngIf="showconfirmPassword" icon="eye"></fa-icon>

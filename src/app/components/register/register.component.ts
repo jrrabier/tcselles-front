@@ -99,7 +99,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerService.registerUser(this.registerForm.value)
     .subscribe(data => {
       if (data.success) {
-        this.flashMessages.show('Votre compte est bien crée !', {cssClass: 'alert-success', timeout: 3000});
+        this.flashMessages.show('Votre compte est bien créé !', {cssClass: 'alert-success', timeout: 3000});
         this.router.navigate(['/login']);
       } else {
         this.flashMessages.show('Une erreur est survenue !', {cssClass: 'alert-danger', timeout: 3000});

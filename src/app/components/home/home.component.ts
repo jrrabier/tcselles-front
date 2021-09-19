@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Router, RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { slideInAnimation } from 'src/app/animations';
+import { Article } from 'src/app/models/article';
+import { ArticleCategory } from 'src/app/models/article_category';
 import { HomeService } from './home.service';
 
 @Component({
@@ -17,13 +17,15 @@ export class HomeComponent implements OnInit {
     isRequestingCategories: boolean = true;
     isRequestingArticles: boolean = true;
 
-    categoriesList: [];
-    articlesList: [];
+    categoriesList: [ArticleCategory];
+    articlesList: [Article];
 
     categoriesForm: FormGroup;
+    articleForm: FormGroup;
+
+    mode: string;
 
     constructor(
-        private router: Router,
         private homeService: HomeService,
         private fb: FormBuilder
     ) {
@@ -34,7 +36,7 @@ export class HomeComponent implements OnInit {
     ngOnInit() {
 
         this.categoriesForm = this.fb.group({
-            articleCategory: 0
+            articleCategory: 1
         });
         
         this.getArticlesCategories$ = this.homeService.getArticlesCategories().subscribe(
@@ -46,24 +48,24 @@ export class HomeComponent implements OnInit {
             }
         );
 
+        this.categoriesForm.get('articleCategory').valueChanges.subscribe(
+            value => {
+                this.onSubmit();
+            }
+        )
+
         this.onSubmit();
     }
 
-//   prepareRoute(outlet: RouterOutlet) {
-//     return outlet && outlet.activatedRouteData && outlet.activatedRouteData.animation;
-//   }
-
     onSubmit() {
-        this.getAllArticles$ = this.homeService.getAllArticles(
+        this.getAllArticles$ = this.homeService.getAllArticlesByCategory(
             this.categoriesForm.get('articleCategory').value
         ).subscribe(
             data => {
                 if (data.success) {
-                    this.articlesList = data.articles;
+                    this.articlesList = data.result;
                     this.isRequestingArticles = false;
                 }
-                console.log(this.articlesList);
-                
             }
         );
     }

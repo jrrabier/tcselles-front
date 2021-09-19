@@ -13,7 +13,10 @@
             <ul class="navbar-nav mr-auto">
                 <li *ngIf="authService.loggedIn()" class="nav-item" [routerLinkActive]="'active'">
                     <a *ngIf="sessionUser" class="nav-link" routerLink="/profile">
-                        <img src="/assets/avatars/default-avatar.png" class="d-inline-block align-top" alt="avatar">
+                        <cl-image [public-id]="sessionUser.avatar" class="img-fluid rounded d-inline-block align-top" alt="avatar">
+                            <cl-transformation width="20" crop="scale">
+                            </cl-transformation>
+                        </cl-image>
                         {{ sessionUser.firstname }}&nbsp;{{ sessionUser.lastname }}
                     </a>
                 </li>

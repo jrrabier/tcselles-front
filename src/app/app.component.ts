@@ -10,7 +10,10 @@ export class AppComponent implements OnInit {
 
     public sessionUser: SessionUser;
 
-    ngOnInit(){}
+    constructor () {}
+
+    ngOnInit(){
+    }
 
     onActivate($event) {
         $event.user = this.sessionUser;

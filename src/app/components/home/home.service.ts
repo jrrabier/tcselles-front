@@ -1,7 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { GetResponse } from 'src/app/interfaces/get-response';
+import { GetAllArticlesResponse } from 'src/app/interfaces/get-all-articles-response';
+import { GetArticleCategoryResponse } from 'src/app/interfaces/get-article-category-response';
 import { PostResponse } from 'src/app/interfaces/post-response';
 import { environment } from 'src/environments/environment';
 
@@ -19,12 +21,15 @@ export class HomeService {
     }
 
     
-    getArticlesCategories(): Observable<GetResponse> {
-        return this.http.get<GetResponse>(`${environment.url}home`, {headers: this.headers});
+    getArticlesCategories(): Observable<GetArticleCategoryResponse> {
+        return this.http.get<GetArticleCategoryResponse>(`${environment.url}home`, {headers: this.headers});
     }
 
-    getAllArticles(value: number): Observable<GetResponse> {
-        return this.http.get<GetResponse>(`${environment.url}articles/show/${value}`, {headers: this.headers});
+    getAllArticlesByCategory(category_id: number): Observable<GetAllArticlesResponse> {
+        return this.http.get<GetAllArticlesResponse>(`${environment.url}home/${category_id}`, {headers: this.headers});
     }
-  
+    
+    postArticle(article: FormGroup): Observable<PostResponse> {
+        return this.http.post<PostResponse>(`${environment.url}articles/add`, article, {headers: this.headers});
+    }
 }

@@ -10,13 +10,9 @@ html, body {
   margin-top: 72px;
 } */
 
-label[class="required"]::after {
+label[required]::after {
   content: " *";
   color: #18BC9C;
-}
-
-div.card {
-  box-shadow: 2px 2px 5px black;
 }
 
 
@@ -48,4 +44,8 @@ input::-ms-clear {
 
 .hasNavbar {
     padding-top: 8em;
+}
+
+.pointer {
+    cursor: pointer;
 }

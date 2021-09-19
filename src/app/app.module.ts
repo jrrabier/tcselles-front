@@ -24,6 +24,11 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { TextMaskModule } from 'angular2-text-mask';
 import { InputComponent } from './shared/components/input/input.component';
 import { LoadingComponent } from './shared/components/loading/loading.component';
+import { CloudinaryModule } from '@cloudinary/angular-5.x';
+import * as Cloudinary from "cloudinary-core";
+import { ArticleModalComponent } from './components/home/new-article-modal/article-modal.component';
+import { TruncatePipe } from './pipes/truncate.pipe';
+import { TruncateFirstNamePipe } from './pipes/truncate-first-name.pipe';
 
 export function tokenGetter() {
   return sessionStorage.getItem('id_token');
@@ -40,7 +45,10 @@ export function tokenGetter() {
     CompulsoryComponent,
     ForgotPasswordComponent,
     InputComponent,
-    LoadingComponent
+    LoadingComponent,
+    ArticleModalComponent,
+    TruncatePipe,
+    TruncateFirstNamePipe
   ],
   imports: [
     BrowserModule,
@@ -54,7 +62,12 @@ export function tokenGetter() {
       }
     }),
     FontAwesomeModule,
-    TextMaskModule
+    TextMaskModule,
+    CloudinaryModule.forRoot(Cloudinary, { 
+        cloud_name: 'hraxyhwzc',
+        secure: true,
+        upload_preset: 'articles'
+    })
   ],
   providers: [
     ValidateService,
